@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '3.0.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'cpp'
 }
 
 group = 'com.example'
@@ -20,3 +21,32 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+model {
+    components {
+        pipeline(NativeLibrarySpec) {
+            sources {
+                cpp {
+                    source {
+                        srcDir 'src/main/cpp'
+                        include 'PipelineJNI.cpp'
+                    }
+                    exportedHeaders {
+                        srcDir 'src/main/cpp'
+                    }
+                }
+            }
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+    options.forkOptions.jvmArgs += ['-Djava.library.path=' + file('build/libs').absolutePath]
+}
+
+task buildPipelineJNI(type: Exec) {
+    commandLine 'sh', '-c', 'g++ -shared -fPIC -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux" -o build/libs/libpipeline.so src/main/cpp/PipelineJNI.cpp'
+}
+
+compileJava.dependsOn buildPipelineJNI
