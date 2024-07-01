@@ -87,9 +87,42 @@ const addon = require('./build/Release/addon');
 async function main() {
     await addon.start();
 
+    // Scalar operations
     await addon.addScalar(42);
     const scalar = await addon.getScalar();
     console.log('Scalar value:', scalar);
+
+    // Distributed scalar operations
+    await addon.addDistributedScalar('myScalar', 100);
+    const distributedScalar = await addon.getDistributedScalar('myScalar');
+    console.log('Distributed scalar value:', distributedScalar);
+
+    // Vector operations
+    await addon.addVectorElement('myVector', 10);
+    const vector = await addon.getVector('myVector');
+    console.log('Vector elements:', vector);
+
+    // Matrix operations
+    await addon.addMatrixElement('myMatrix', 0, 0, 1);
+    await addon.addMatrixElement('myMatrix', 0, 1, 2);
+    const matrix = await addon.getMatrix('myMatrix');
+    console.log('Matrix elements:', matrix);
+
+    // Tree operations
+    await addon.addTreeNode('myTree', 5);
+    const treeNodes = await addon.getTreeNodes('myTree');
+    console.log('Tree nodes:', treeNodes);
+
+    // Bloom filter operations
+    await addon.addBloomFilterElement('myBloomFilter', 'test');
+    const bloomFilterCheck = await addon.checkBloomFilterElement('myBloomFilter', 'test');
+    console.log('Bloom filter check:', bloomFilterCheck);
+
+    // Linked hash map operations
+    await addon.putLinkedHashMap('myMap', 'key1', 200);
+    const mapValue = await addon.getLinkedHashMap('myMap', 'key1');
+    console.log('Linked hash map value:', mapValue);
+    await addon.removeLinkedHashMap('myMap', 'key1');
 
     await addon.stop();
 }
@@ -105,9 +138,42 @@ def main():
     p = pipeline.Pipeline()
     p.start()
     
+    # Scalar operations
     p.add_scalar(42)
     scalar = p.get_scalar()
     print('Scalar value:', scalar)
+
+    # Distributed scalar operations
+    p.add_distributed_scalar('myScalar', 100)
+    distributed_scalar = p.get_distributed_scalar('myScalar')
+    print('Distributed scalar value:', distributed_scalar)
+
+    # Vector operations
+    p.add_vector_element('myVector', 10)
+    vector = p.get_vector('myVector')
+    print('Vector elements:', vector)
+
+    # Matrix operations
+    p.add_matrix_element('myMatrix', 0, 0, 1)
+    p.add_matrix_element('myMatrix', 0, 1, 2)
+    matrix = p.get_matrix('myMatrix')
+    print('Matrix elements:', matrix)
+
+    # Tree operations
+    p.add_tree_node('myTree', 5)
+    tree_nodes = p.get_tree_nodes('myTree')
+    print('Tree nodes:', tree_nodes)
+
+    # Bloom filter operations
+    p.add_bloom_filter_element('myBloomFilter', 'test')
+    bloom_filter_check = p.check_bloom_filter_element('myBloomFilter', 'test')
+    print('Bloom filter check:', bloom_filter_check)
+
+    # Linked hash map operations
+    p.put_linked_hash_map('myMap', 'key1', 200)
+    map_value = p.get_linked_hash_map('myMap', 'key1')
+    print('Linked hash map value:', map_value)
+    p.remove_linked_hash_map('myMap', 'key1')
 
     p.stop()
 
