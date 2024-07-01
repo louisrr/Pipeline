@@ -28,9 +28,6 @@ Pipeline leverages the capabilities of C++ and the Seastar framework to create d
 1. **Clone the Repository**
 
     ```bash
-<<<<<<< HEAD
-    git clone https://github.com/yourusername/pipeline.git
-=======
     git clone https://github.com/louisrr/pipeline.git
 >>>>>>> ced68dc58881676bb536522066f8290834a92695
     cd pipeline
