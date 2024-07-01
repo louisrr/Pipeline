@@ -82,19 +82,8 @@ int main() {
 
 ### Node.js API
 ```JavaScript
-const addon = require('./build/Release/addon');
-
-async function main() {
-    await addon.start();
-
-    await addon.addScalar(42);
-    const scalar = await addon.getScalar();
-    console.log('Scalar value:', scalar);
-
-    await addon.stop();
-}
-
-main();
+pip install pybind11
+python setup.py build_ext --inplace
 ```
 
 ### Python API
@@ -146,7 +135,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 ```
 
 
